@@ -6,4 +6,4 @@ create table usuario(
 );
 
 select *
-from usuario
+from usuario;
