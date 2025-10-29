@@ -1,0 +1,35 @@
+name: Validate SQL Keywords Uppercase
+
+on:
+  push:
+    paths:
+      - '**/*.sql'
+  pull_request:
+    paths:
+      - '**/*.sql'
+
+jobs:
+  check-sql-keywords:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate SQL keywords are uppercase
+        run: |
+          echo "🔍 Validando palabras reservadas SQL en mayúsculas..."
+          SQL_KEYWORDS="SELECT|FROM|WHERE|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|ALTER|DROP|JOIN|INNER|LEFT|RIGHT|FULL|ON|AS|AND|OR|NOT|NULL|IS|IN|EXISTS|BETWEEN|LIKE|GROUP|BY|ORDER|HAVING|DISTINCT|UNION|ALL|LIMIT|OFFSET"
+          ERROR=0
+          for file in $(find . -type f -name '*.sql'); do
+            for kw in $(echo $SQL_KEYWORDS | tr '|' ' '); do
+              if grep -E -n "\b$(echo $kw | tr 'A-Z' 'a-z')\b" "$file" > /dev/null; then
+                echo "❌ Error: La palabra reservada SQL '$(echo $kw | tr 'A-Z' 'a-z')' debe estar en MAYÚSCULAS en $file"
+                grep -E -n "\b$(echo $kw | tr 'A-Z' 'a-z')\b" "$file"
+                ERROR=1
+              fi
+            done
+          done
+          if [ $ERROR -ne 0 ]; then
+            exit 1
+          fi
+          echo "✅ Todas las palabras reservadas SQL están en mayúsculas."
