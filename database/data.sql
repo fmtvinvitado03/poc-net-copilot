@@ -5,5 +5,5 @@ create table usuario(
     direccion varchar(500) null
 );
 
-select *
-from usuario
+select id, getdate() as Fecha
+from usuario:
