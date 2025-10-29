@@ -5,5 +5,5 @@ CREATE TABLE usuario(
     direcciones varchar(500) NULL
 );
 
-SELECT id, getdate() AS Fechas
-FROM usuario;
+select id, getdate() AS Fechas
+from usuario;
