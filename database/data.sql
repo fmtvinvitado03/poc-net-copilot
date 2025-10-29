@@ -1,9 +1,9 @@
-create table usuario(
-    id int,
-    nombre varchar(250),
-    email varchar(250),
-    direcciones varchar(500) null
+CREATE TABLE usuario(
+    id INT,
+    nombre VARCHAR(250),
+    email VARCHAR(250),
+    direcciones varchar(500) NULL
 );
 
-select id, getdate() as Fecha
-from usuario;
+SELECT id, getdate() AS Fechas
+FROM usuario;
